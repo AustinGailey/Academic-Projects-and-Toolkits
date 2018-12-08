@@ -1,0 +1,13 @@
+--cpu Cortex-M3
+".\objects\core_cm3_constant.o"
+".\objects\main.o"
+".\objects\startup_stm32l1xx_md.o"
+".\objects\stm32l1xx_constants.o"
+".\objects\stm32l1xx_tim_constants.o"
+"C:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Lib\ARM\arm_cortexM3l_math.lib"
+".\objects\startup_armcm3.o"
+".\objects\system_armcm3.o"
+--strict --scatter ".\Objects\Test4.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Test4.map" -o .\Objects\Test4.axf

@@ -1,0 +1,62 @@
+	; **********************************
+	;  File: PrintText.s
+	;  Programmer: I. Georgiev
+	;  Description: A Program to ouput a text string immediately
+	;               following the call
+	;========Example: BL  Print to print", &0a,&0d,0
+	;                 ALIGNt
+	;                 =   "Tex
+	;  Project: PrintText.arj               
+	;  Date: October 2002
+	;************************************
+	
+	AREA PrintText, CODE, READONLY
+	EXPORT main
+SWI_WriteC	EQU	&0     ;output character in r0 
+SWI_Exit	EQU	&11    ;finish program
+string		DCB		"The grey fox jumped over the wall",&0a,&0d,0
+		ENTRY
+main
+		ADR r14,=string
+		BL  Print	;call print subroutine
+
+		MOV r13,#0		;initializing vowel count to 0
+		MOV r14,=string	;initializing string register
+		BL	Vowel
+		ALIGN
+		SWI 	SWI_Exit	;finish
+Print		LDRB	r0,[r14], #1	;get a character
+		CMP 	r0, #0		;end mark NUL?
+		SWINE 	SWI_WriteC	;if not, print
+		BNE	Print
+		ADD	r14, r14, #3	; pass next word boundary
+		BIC	r14, r14, #3	; round back to boundary
+		MOV	pc, r14		;return
+countVowel	
+count	ADR r13,#1
+Vowel
+		LDRB	r0,[r14],#1	;get a character
+		CMP 	r0, #0		;end mark NUL?
+		SWIEQ 	SWI_Exit	;if not, print
+		TEQ		r0,#&'A'
+		TEQNE	r0,#&'E' 
+		TEQNE	r0,#&'I' 
+		TEQNE	r0,#&'O' 
+		TEQNE	r0,#&'U' 
+		BEQ		countVowel
+		BL		lowerCaseVowel
+lowerCaseVowel
+		TEQ		r0,#&'a'
+		TEQNE	r0,#&'e' 
+		TEQNE	r0,#&'i' 
+		TEQNE	r0,#&'o' 
+		TEQNE	r0,#&'u' 
+		SUBEQ	r0,#&20
+		STR		[r14],r0
+		BEQ		countVowel
+		
+		
+ 		END	
+;*****************************
+;The program works and prints!
+;***************************** 

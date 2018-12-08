@@ -1,0 +1,123 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; **********************************
+    2 00000000         ;  File: PrintText.s
+    3 00000000         ;  Programmer: I. Georgiev
+    4 00000000         ;  Description: A Program to ouput a text string immedia
+                       tely
+    5 00000000         ;               following the call
+    6 00000000         ;========Example: BL  Print
+    7 00000000         ;                 =   "Text to print", &0a,&0d,0
+    8 00000000         ;                 ALIGN
+    9 00000000         ;  Project: PrintText.arj               
+   10 00000000         ;  Date: October 2002
+   11 00000000         ;************************************
+   12 00000000         
+   13 00000000                 AREA             PrintText, CODE, READONLY
+   14 00000000                 EXPORT           main
+   15 00000000 00000000 
+                       SWI_WriteC
+                               EQU              &0          ;output character i
+                                                            n r0 
+   16 00000000 00000011 
+                       SWI_Exit
+                               EQU              &11         ;finish program
+   17 00000000                 ENTRY
+   18 00000000         main
+   19 00000000 F000 F809       BL               Print       ;call print subrout
+                                                            ine
+   20 00000004 54 65 78 
+              74 20 74 
+              6F 20 70 
+              72 69 6E 
+              74 0A 0D 
+              00               =                "Text to print",&0a,&0d,0
+   21 00000014                 ALIGN
+   22 00000014 DF11            SWI              SWI_Exit    ;finish
+   23 00000016 F81E 0B01 
+                       Print   LDRB             r0,[r14], #1 ;get a character
+   24 0000001A 2800            CMP              r0, #0      ;end mark NUL?
+   25 0000001C BF18 DF00       SWINE            SWI_WriteC  ;if not, print
+   26 00000020 D1F9            BNE              Print
+   27 00000022 F10E 0E03       ADD              r14, r14, #3 ; pass next word b
+                                                            oundary
+   28 00000026 F02E 0E03       BIC              r14, r14, #3 ; round back to bo
+                                                            undary
+   29 0000002A 46F7            MOV              pc, r14     ;return
+   30 0000002C                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\printtext1.d -o.\objects\printtext1.o -I.\RTE\_Target_1 
+-I"C:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\Device\ARM\ARMCM3\Include" -I"C:\P
+rogram Files\ARM\CMSIS\Include" --predefine="__EVAL SETA 1" --predefine="__UVIS
+ION_VERSION SETA 524" --predefine="ARMCM3 SETA 1" --list=.\listings\printtext1.
+lst C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\CSI2400\PrintText1.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Print 00000016
+
+Symbol: Print
+   Definitions
+      At line 23 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+   Uses
+      At line 19 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+      At line 26 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+
+PrintText 00000000
+
+Symbol: PrintText
+   Definitions
+      At line 13 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+   Uses
+      None
+Comment: PrintText unused
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 18 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+   Uses
+      At line 14 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+Comment: main used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+SWI_Exit 00000011
+
+Symbol: SWI_Exit
+   Definitions
+      At line 16 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+   Uses
+      At line 22 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+Comment: SWI_Exit used once
+SWI_WriteC 00000000
+
+Symbol: SWI_WriteC
+   Definitions
+      At line 15 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+   Uses
+      At line 25 in file C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\C
+SI2400\PrintText1.s
+Comment: SWI_WriteC used once
+2 symbols
+338 symbols in table

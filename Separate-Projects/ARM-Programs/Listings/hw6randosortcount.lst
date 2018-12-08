@@ -1,0 +1,227 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;************************************************;
+    2 00000000         ;Program: HW6          ;
+    3 00000000         ;  This program will generate a series of  ;
+    4 00000000         ;  randon words, sort them with bubble sort ;
+    5 00000000         ;  then count the 1's and 0's     ;
+    6 00000000         ;             ;
+    7 00000000         ;Written By: Austin Gailey       ;
+    8 00000000         ;             ;
+    9 00000000         ;Date:  3/28/2018         ;
+   10 00000000         ;             ;
+   11 00000000         ;************************************************;
+   12 00000000                 AREA             HW6, CODE, READONLY ; name this
+                                                             block of code
+   13 00000000                 EXPORT           main
+   14 00000000                 IMPORT           randomnumber
+   15 00000000                 ENTRY                        ; mark first instru
+                                                            ction
+   16 00000000         ; to execute
+   17 00000000         main
+   18 00000000 F04F 0300       MOV              r3,#0       ;index counter
+   19 00000004 F04F 0400       MOV              r4,#0       ;counter
+   20 00000008 F000 F80B       BL               fillArray   ;Branch to fillArra
+                                                            y subroutine
+   21 0000000C F000 F800       BL               hardcodeArray
+   22 00000010 F000 F819       BL               viewArray   ;Branch to viewArra
+                                                            y subroutine
+   23 00000014 F000 F823       BL               sortArray   ;Branch to sortArra
+                                                            y subroutine
+   24 00000018 F000 F815       BL               viewArray   ;Branch to viewArra
+                                                            y subroutine
+   25 0000001C F000 F83E       BL               countOnes   ;Branch to oneCount
+                                                             subroutine
+   26 00000020 E06A            B                exit        ;terminate program
+   27 00000022         
+   28 00000022         fillArray
+   29 00000022 F20F 08A8       ADR              r8,randoms  ;Store randoms addr
+                                                            ess in r5
+   30 00000026 46F3            MOV              r11,lr      ;Store link registe
+                                                            r in r11
+   31 00000028 F8DF A0C8       LDR              r10,mask    ;Mask for easy read
+                                                            ing
+   32 0000002C         fillLoop
+   33 0000002C F7FF FFFE       BL               randomnumber ;Branch with Link 
+                                                            to randomnumber fil
+                                                            e
+   34 00000030 EA00 000A       AND              r0,r0,r10   ;Mask value for eas
+                                                            y reading
+   35 00000034 F848 0B04       STR              r0,[r8],#4  ;Store random numbe
+                                                            r
+   36 00000038 F103 0301       ADD              r3,r3,#1    ;Increment index co
+                                                            unter
+   37 0000003C 2B0A            CMP              r3,#10      ;Compare if end of 
+                                                            array
+   38 0000003E DBF5            BLT              fillLoop    ;Loop back to fillL
+                                                            oop subroutine
+   39 00000040 F04F 0300       MOV              r3,#0       ;Clear index counte
+                                                            r
+   40 00000044 4758            BX               r11         ;Branch to r11
+   41 00000046         ; 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   42 00000046         ;hardcodeArray
+   43 00000046         ; ADR  r8,randoms
+   44 00000046         ; MOV  r0, #0x1F
+   45 00000046         ; STR  r0,[r8],#4
+   46 00000046         ; MOV  r0, #0x1F
+   47 00000046         ; STR  r0,[r8],#4
+   48 00000046         ; MOV  r0, #0x1F
+   49 00000046         ; STR  r0,[r8],#4
+   50 00000046         ; MOV  r0, #0x1F
+   51 00000046         ; STR  r0,[r8],#4
+   52 00000046         ; MOV  r0, #0x1F
+   53 00000046         ; STR  r0,[r8],#4
+   54 00000046         ; MOV  r0, #0x1F
+   55 00000046         ; STR  r0,[r8],#4
+   56 00000046         ; MOV  r0, #0x1F
+   57 00000046         ; STR  r0,[r8],#4
+   58 00000046         ; MOV  r0, #0x1F
+   59 00000046         ; STR  r0,[r8],#4
+   60 00000046         ; MOV  r0, #0x1F
+   61 00000046         ; STR  r0,[r8],#4
+   62 00000046         ; MOV  r0, #0x1F
+   63 00000046         ; STR  r0,[r8],#4
+   64 00000046         ; BX  lr
+   65 00000046         ; 
+   66 00000046         
+   67 00000046         viewArray
+   68 00000046 F20F 0884       ADR              r8,randoms  ;Store randoms addr
+                                                            ess in r5
+   69 0000004A         viewLoop
+   70 0000004A F858 6B04       LDR              r6,[r8],#4  ;Show randoms value
+                                                             in r6
+   71 0000004E 4635            MOV              r5,r6
+   72 00000050 F103 0301       ADD              r3,r3,#1    ;Increment index co
+                                                            unter
+   73 00000054 2B0A            CMP              r3,#10      ;Compare if end of 
+                                                            array
+   74 00000056 D1F8            BNE              viewLoop    ;Loop back to viewL
+                                                            oop subroutine
+   75 00000058 F04F 0300       MOV              r3,#0       ;Clear index counte
+                                                            r
+   76 0000005C 4770            BX               lr
+   77 0000005E         
+   78 0000005E         sortArray                            ;Begin BubbleSort o
+                                                            f Array
+   79 0000005E F20F 086C       ADR              r8,randoms  ;Store randoms addr
+                                                            ess in r5
+   80 00000062 F04F 0300       MOV              r3,#0       ;Clear index counte
+                                                            r
+   81 00000066 F04F 0400       MOV              r4,#0       ;Clear counter
+   82 0000006A         sortLoop
+   83 0000006A F8D8 6000       LDR              r6,[r8]     ;value
+   84 0000006E F8D8 7004       LDR              r7,[r8,#4]  ;value + 1
+   85 00000072 42BE            CMP              r6,r7       ;Compare if value i
+                                                            s greater than valu
+                                                            e + 1
+   86 00000074         
+   87 00000074 BF82 F8C8 
+              6004             STRHI            r6,[r8,#4]  ;swap
+   88 0000007A F8C8 7000       STRHI            r7,[r8]     ;swap
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   89 0000007E 1C64            ADDHI            r4,r4,#1    ;increment swap cou
+                                                            nter
+   90 00000080         
+   91 00000080 F103 0301       ADD              r3,r3,#1    ;Add 1 to index cou
+                                                            nter
+   92 00000084 F108 0504       ADD              r5,r8,#4    ;Get next value in 
+                                                            r5
+   93 00000088 2B09            CMP              r3,#9       ;Compare if end of 
+                                                            array
+   94 0000008A D1EE            BNE              sortLoop    ;Branch to sortLoop
+                                                             subroutine
+   95 0000008C F094 0F00       TEQ              r4,#0       ;Test if swap count
+                                                            er is zero
+   96 00000090 D1E5            BNE              sortArray   ;Branch to sortArra
+                                                            y subroutine
+   97 00000092 F04F 0300       MOV              r3,#0       ;Clear index counte
+                                                            r
+   98 00000096 F04F 0400       MOV              r4,#0       ;Clear counter
+   99 0000009A 4770            BX               lr          ;Branch to link reg
+                                                            ister
+  100 0000009C         
+  101 0000009C         countOnes
+  102 0000009C F20F 082C       ADR              r8,randoms  ;Stores first rando
+                                                            ms value in r5
+  103 000000A0         loopCount
+  104 000000A0 F858 6B04       LDR              r6,[r8],#4  ;Store value in r6
+  105 000000A4 F103 0301       ADD              r3,r3,#1    ;Add 1 to index cou
+                                                            nter
+  106 000000A8 F096 0F00       TEQ              r6,#0       ;Test if word is al
+                                                            l zeros
+  107 000000AC BF18 1C64       ADDNE            r4,r4,#1    ;increment 1's coun
+                                                            ter
+  108 000000B0         count
+  109 000000B0 F1A6 0701       SUB              r7,r6,#1    ;Subtract 1 from wo
+                                                            rd
+  110 000000B4 EA07 0606       AND              r6,r7,r6    ;And the two words
+  111 000000B8 F096 0F00       TEQ              r6,#0       ;Test if word is al
+                                                            l zeros
+  112 000000BC BF18 1C64       ADDNE            r4,r4,#1    ;Increment 1's coun
+                                                            ter
+  113 000000C0 D1F6            BNE              count       ;Branch if not equa
+                                                            l to count subrouti
+                                                            ne
+  114 000000C2 2B0A            CMP              r3,#10      ;Compare if end of 
+                                                            array
+  115 000000C4 D1EC            BNE              loopCount   ;Branch if not equa
+                                                            l to loopCount subr
+                                                            outine
+  116 000000C6 F04F 0300       MOV              r3,#0       ;clear index counte
+                                                            r
+  117 000000CA 4770            BX               lr          ;Branch to link reg
+                                                            ister
+  118 000000CC         
+  119 000000CC                 ALIGN
+  120 000000CC 00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00 00 00 
+              00       randoms %                10*4
+  121 000000F4 0000FFFF 
+                       mask    DCD              0x0000FFFF
+  122 000000F8         
+  123 000000F8         exit
+  124 000000F8 E7FE            B                .           ;Branch to self to 
+                                                            terminate program
+  125 000000FA         
+  126 000000FA         
+  127 000000FA         
+  128 000000FA                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\hw6randosortcount.d -o.\objects\hw6randosortcount.o -I.\
+RTE\_Target_1 -I"C:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include" -I"C:
+\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\Device\ARM\ARMCM3\Include" --predefine=
+"__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SET
+A 1" --predefine="ARMCM3 SETA 1" --list=.\listings\hw6randosortcount.lst HW6Ran
+doSortCount.s

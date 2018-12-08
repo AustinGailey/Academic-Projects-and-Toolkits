@@ -1,0 +1,42 @@
+;***************************************
+;Program: HW 6
+;		This program will generate a series of
+;		randon words, sort them with bubble sort
+;		then count the 1's and 0's
+;
+;
+;
+;
+;
+;***************************************
+	AREA	HW6, CODE, READONLY	; name this block of code
+	EXPORT	main
+	IMPORT	randomnumber
+	ENTRY							; mark first instruction
+									; to execute
+main
+	BL		fillArray
+	BL		sortArray
+	BL		count0
+	BL		count1
+
+	B		exit					;branch to main
+	
+fillArray
+	BL		randomnumber
+	BX		lr
+	
+sortArray
+	
+	BX		lr
+	
+count0
+	
+	BX		lr
+	
+count1
+
+	BX		lr
+exit
+	B		.
+	END				

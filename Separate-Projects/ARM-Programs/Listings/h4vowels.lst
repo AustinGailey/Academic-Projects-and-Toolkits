@@ -1,0 +1,132 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; **********************************
+    2 00000000         ;  File: HW4Vowels.s
+    3 00000000         ;  Programmer: Austin Gailey
+    4 00000000         ;  Description: A Program to find vowels count them
+    5 00000000         ;               and change them to uppercase            
+                         
+    6 00000000         ;  Date: 5 March 2018
+    7 00000000         ;************************************
+    8 00000000         
+    9 00000000                 AREA             H4Vowels, CODE, READONLY
+   10 00000000                 EXPORT           main
+   11 00000000 54 68 65 
+              20 67 72 
+              65 79 20 
+              66 6F 78 
+              20 6A 75 
+              6D 70 65 
+              64 20 6F 
+              76 65 72 
+              20 74 68 
+              65 20 77 
+              61 6C 6C 
+              0A 0D 00 string  DCB              "The grey fox jumped over the w
+all",&0a,&0d,0
+   12 00000024                 ENTRY
+   13 00000024         main
+   14 00000024 F04F 0200       MOV              r2,#0       ;initializing vowel
+                                                             count to 0
+   15 00000028 F2AF 072C       ADR              r7,string   ;initializing strin
+                                                            g register
+   16 0000002C F000 F802       BL               Vowel
+   17 00000030         countVowel
+   18 00000030 F102 0201       ADD              r2,#1
+   19 00000034         Vowel
+   20 00000034 F817 0B01       LDRB             r0,[r7],#1  ;get a character
+   21 00000038 2800            CMP              r0, #0      ;end mark NULL?
+   22 0000003A BF08 F000 
+              F813             BLEQ             exit
+   23 00000040 2841            CMP              r0,#'A'
+   24 00000042 BF1F 2845       CMPNE            r0,#'E'
+   25 00000046 2849            CMPNE            r0,#'I'
+   26 00000048 284F            CMPNE            r0,#'O'
+   27 0000004A 2855            CMPNE            r0,#'U'
+   28 0000004C D0F0            BEQ              countVowel
+   29 0000004E 2861            CMP              r0,#'a'
+   30 00000050 BF1F 2865       CMPNE            r0,#'e'
+   31 00000054 2869            CMPNE            r0,#'i'
+   32 00000056 286F            CMPNE            r0,#'o'
+   33 00000058 2875            CMPNE            r0,#'u'
+   34 0000005A BF08 3820       SUBEQ            r0,#32
+   35 0000005E 7038            STRB             r0,[r7]
+   36 00000060 D0E6            BEQ              countVowel
+   37 00000062 F7FF FFE7       BL               Vowel
+   38 00000066         exit
+   39 00000066 E7FE            B                .
+   40 00000068                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\h4vowels.d -o.\objects\h4vowels.o -I.\RTE\_Target_1 -I"C
+:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include" -I"C:\Program Files\ARM
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+\PACK\ARM\CMSIS\5.0.1\Device\ARM\ARMCM3\Include" --predefine="__EVAL SETA 1" --
+predefine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="
+ARMCM3 SETA 1" --list=.\listings\h4vowels.lst H4Vowels.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+H4Vowels 00000000
+
+Symbol: H4Vowels
+   Definitions
+      At line 9 in file H4Vowels.s
+   Uses
+      None
+Comment: H4Vowels unused
+Vowel 00000034
+
+Symbol: Vowel
+   Definitions
+      At line 19 in file H4Vowels.s
+   Uses
+      At line 16 in file H4Vowels.s
+      At line 37 in file H4Vowels.s
+
+countVowel 00000030
+
+Symbol: countVowel
+   Definitions
+      At line 17 in file H4Vowels.s
+   Uses
+      At line 28 in file H4Vowels.s
+      At line 36 in file H4Vowels.s
+
+exit 00000066
+
+Symbol: exit
+   Definitions
+      At line 38 in file H4Vowels.s
+   Uses
+      At line 22 in file H4Vowels.s
+Comment: exit used once
+main 00000024
+
+Symbol: main
+   Definitions
+      At line 13 in file H4Vowels.s
+   Uses
+      At line 10 in file H4Vowels.s
+Comment: main used once
+string 00000000
+
+Symbol: string
+   Definitions
+      At line 11 in file H4Vowels.s
+   Uses
+      At line 15 in file H4Vowels.s
+Comment: string used once
+6 symbols
+340 symbols in table

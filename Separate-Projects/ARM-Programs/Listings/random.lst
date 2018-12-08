@@ -1,0 +1,128 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Random number generator
+    2 00000000         ;
+    3 00000000         ; This uses a 33-bit feedback shift register to generate
+                        a pseudo-randomly
+    4 00000000         ; ordered sequence of numbers which repeats in a cycle o
+                       f length 2^33 - 1
+    5 00000000         ; NOTE: randomseed should not be set to 0, otherwise a z
+                       ero will be generated
+    6 00000000         ; continuously (not particularly random!).
+    7 00000000         ;
+    8 00000000         ; This is a good application of direct ARM assembler, be
+                       cause the 33-bit
+    9 00000000         ; shift register can be implemented using RRX (which use
+                       s reg + carry).
+   10 00000000         ; An ANSI C version would be less efficient as the compi
+                       ler would not use RRX.
+   11 00000000         
+   12 00000000                 AREA             |Random$$code|, CODE, READONLY
+   13 00000000         
+   14 00000000                 EXPORT           randomnumber
+   15 00000000         
+   16 00000000         randomnumber
+   17 00000000         ; on exit:
+   18 00000000         ; r0 = low 32-bits of pseudo-random number
+   19 00000000         ; r1 = high bit (if you want to know it)
+   20 00000000         
+   21 00000000 F8DF A01E       LDR              r10, |seedpointer|
+   22 00000004 E89A 0003       LDMIA            r10, {r0, r1}
+   23 00000008 EA11 0F51       TST              r1, r1, LSR#1 
+                                                            ; to bit into carry
+                                                            
+   24 0000000C EA5F 0230       MOVS             r2, r0, RRX ; 33-bit rotate rig
+                                                            ht
+   25 00000010 EB41 0101       ADC              r1, r1, r1  ; carry into LSB of
+                                                             a2
+   26 00000014 EA82 3202       EOR              r2, r2, r2, LSL#12 
+                                                            ; (involved!)
+   27 00000018 EA82 5012       EOR              r0, r2, r2, LSR#20 ; (similarly
+                                                             involved!)
+   28 0000001C E88A 0003       STMIA            r10, {r0, r1}
+   29 00000020         
+   30 00000020 4770            BX               lr
+   31 00000022         
+   32 00000022         |seedpointer|
+   33 00000022 00 00           ALIGN
+   34 00000024 00000000        DCD              seed
+   35 00000028         
+   36 00000028                 AREA             |Random$$data|, DATA
+   37 00000000         
+   38 00000000                 EXPORT           seed
+   39 00000000         seed
+   40 00000000 77777777        DCD              &77777777
+   41 00000004 FFFFFFFF        DCD              &ffffffff
+   42 00000008                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\random.d -o.\objects\random.o -I.\RTE\_Target_1 -I"C:\Pr
+ogram Files\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include" -I"C:\Program Files\ARM\PAC
+K\ARM\CMSIS\5.0.1\Device\ARM\ARMCM3\Include" --predefine="__EVAL SETA 1" --pred
+efine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="ARMC
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+M3 SETA 1" --list=.\listings\random.lst RANDOM.S
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Random$$code 00000000
+
+Symbol: Random$$code
+   Definitions
+      At line 12 in file RANDOM.S
+   Uses
+      None
+Comment: Random$$code unused
+randomnumber 00000000
+
+Symbol: randomnumber
+   Definitions
+      At line 16 in file RANDOM.S
+   Uses
+      At line 14 in file RANDOM.S
+Comment: randomnumber used once
+seedpointer 00000022
+
+Symbol: seedpointer
+   Definitions
+      At line 32 in file RANDOM.S
+   Uses
+      At line 21 in file RANDOM.S
+Comment: seedpointer used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Random$$data 00000000
+
+Symbol: Random$$data
+   Definitions
+      At line 36 in file RANDOM.S
+   Uses
+      None
+Comment: Random$$data unused
+seed 00000000
+
+Symbol: seed
+   Definitions
+      At line 39 in file RANDOM.S
+   Uses
+      At line 34 in file RANDOM.S
+      At line 38 in file RANDOM.S
+
+2 symbols
+339 symbols in table

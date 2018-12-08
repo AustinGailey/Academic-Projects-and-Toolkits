@@ -1,0 +1,28 @@
+Component: ARM Compiler 5.06 update 5 (build 528) Tool: armlink [4d35e2]
+
+==============================================================================
+
+Section Cross References
+
+    startup_stm32l1xx_md.o(RESET) refers to startup_stm32l1xx_md.o(STACK) for __initial_sp
+    startup_stm32l1xx_md.o(RESET) refers to startup_stm32l1xx_md.o(.text) for Reset_Handler
+    startup_stm32l1xx_md.o(RESET) refers to startup_armcm3.o(.text) for Reset_Handler
+    startup_stm32l1xx_md.o(.text) refers to main.o(main) for __main
+    startup_stm32l1xx_md.o(.text) refers to startup_stm32l1xx_md.o(HEAP) for Heap_Mem
+    startup_stm32l1xx_md.o(.text) refers to startup_stm32l1xx_md.o(STACK) for Stack_Mem
+    startup_armcm3.o(STACK) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
+    startup_armcm3.o(HEAP) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
+    startup_armcm3.o(RESET) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
+    startup_armcm3.o(RESET) refers to startup_armcm3.o(STACK) for __initial_sp
+    startup_armcm3.o(RESET) refers to startup_stm32l1xx_md.o(.text) for Reset_Handler
+    startup_armcm3.o(RESET) refers to startup_armcm3.o(.text) for Reset_Handler
+    startup_armcm3.o(.text) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
+    startup_armcm3.o(.text) refers to system_armcm3.o(i.SystemInit) for SystemInit
+    startup_armcm3.o(.text) refers to main.o(main) for __main
+    startup_armcm3.o(.text) refers to startup_armcm3.o(HEAP) for Heap_Mem
+    startup_armcm3.o(.text) refers to startup_armcm3.o(STACK) for Stack_Mem
+    system_armcm3.o(i.SystemCoreClockUpdate) refers to system_armcm3.o(.data) for SystemCoreClock
+    system_armcm3.o(i.SystemInit) refers to startup_stm32l1xx_md.o(RESET) for __Vectors
+    system_armcm3.o(i.SystemInit) refers to startup_armcm3.o(RESET) for __Vectors
+    system_armcm3.o(i.SystemInit) refers to system_armcm3.o(.data) for SystemCoreClock
+

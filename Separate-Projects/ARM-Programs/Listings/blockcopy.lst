@@ -1,0 +1,99 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; **********************************
+    2 00000000         ;  File: Blockcopy.s
+    3 00000000         ;  Programmer: I. Georgiev
+    4 00000000         ;  Description: A Program to transfer string to string
+    5 00000000         ;               word (4 bytes) after a word.
+    6 00000000         ;  Project: TABLE1.arj.                
+    7 00000000         ;  Date: October 2002
+    8 00000000         ;************************************
+    9 00000000         
+   10 00000000                 AREA             Blockcopy, CODE, READONLY
+   11 00000000                 EXPORT           main
+   12 00000000 00000000 
+                       SWI_WriteC
+                               EQU              &0          ;output character i
+                                                            n r0 
+   13 00000000 00000011 
+                       SWI_Exit
+                               EQU              &11         ;finish program
+   14 00000000                 ENTRY
+   15 00000000         main
+   16 00000000 DE00            ADR              r1, STRING1 ;r1 points to TABLE
+                                                            1 
+   17 00000002 A214            ADR              r2, STRING2 ;r1 points toTABLE2
+                                                            
+   18 00000004 DE00            ADR              r3, T1END   ;r3 points to T1END
+                                                            
+   19 00000006 F851 0B04 
+                       LOOP1   LDR              r0,[r1], #4 ;get TABLE1 1st wor
+                                                            d
+   20 0000000A F842 0B04       STR              r0,[r2], #4 ;copy into TABLE2
+   21 0000000E 4299            CMP              r1, r3      ;finished??
+   22 00000010 DBF9            BLT              LOOP1       ;if not, branch to 
+                                                            loop body
+   23 00000012 A110            ADR              r1,STRING2  ;r1 points to TABLE
+                                                            2
+   24 00000014 F811 0B01 
+                       LOOP2   LDRB             r0,[r1],#1  ; Get next byte
+   25 00000018 2800            CMP              r0, #0      ;check for text end
+                                                            
+   26 0000001A BF18 DF00       SWINE            SWI_WriteC  ;if not, print
+   27 0000001E D1F9            BNE              LOOP2       ;... and loop back
+   28 00000020 DF11            SWI              SWI_Exit    ;finish
+   29 00000022 43 53 49 
+              32 34 30 
+              30 20 41 
+              52 4D 20 
+              6C 6F 6F 
+              70 2D 6F 
+              72 69 65 
+              6E 74 65 
+              64 20 70 
+              72 6F 67 
+              72 61 6D 
+              6D 69 6E 
+              67 20 73 
+              74 79 6C 
+              65 21 0A 
+              0D 00    STRING1 =                "CSI2400 ARM loop-oriented prog
+ramming style!",&0a, &0d,0
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   30 00000051         T1END
+   31 00000051 00 00 00        ALIGN                        ;ensure word alignm
+                                                            ent
+   32 00000054 54 68 69 
+              73 20 69 
+              73 20 74 
+              68 65 20 
+              77 72 6F 
+              6E 67 20 
+              73 74 72 
+              69 6E 67 
+              21 20 4D 
+              75 73 74 
+              20 62 65 
+              20 72 65 
+              70 6C 61 
+              63 65 64 
+              21 3F 0A 
+              0D 00    STRING2 =                "This is the wrong string! Must
+ be replaced!?",&0a, &0d,0
+   33 00000083                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\blockcopy.d -o.\objects\blockcopy.o -I.\RTE\_Target_1 -I
+"C:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include" -I"C:\Program Files\A
+RM\PACK\ARM\CMSIS\5.0.1\Device\ARM\ARMCM3\Include" --predefine="__EVAL SETA 1" 
+--predefine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine
+="ARMCM3 SETA 1" --list=.\listings\blockcopy.lst C:\Users\agail\Downloads\ARMex
+amples\ARM200\EXAMPLES\CSI2400\Blockcopy.s

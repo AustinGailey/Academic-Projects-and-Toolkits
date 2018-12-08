@@ -1,0 +1,6 @@
+--cpu Cortex-M3 --li --pd "__EVAL SETA 1" -g --apcs=interwork 
+-I.\RTE\_Target_1
+-I"C:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include"
+-I"C:\Program Files\ARM\PACK\ARM\CMSIS\5.0.1\Device\ARM\ARMCM3\Include"
+--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "ARMCM3 SETA 1"
+--list .\listings\hw5.lst --xref -o .\objects\hw5.o --depend .\objects\hw5.d "C:\Users\agail\Downloads\ARMexamples\ARM200\EXAMPLES\CSI2400\HW5.s"

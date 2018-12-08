@@ -1,0 +1,20 @@
+P5Sort - Austin Gailey 
+
+Number of words:   10643
+Number of numbers: 10000
+
+Bubble sort String cpu   time: 1776860962          
+Bubble sort String clock time: 1777      
+Bubble sort Integer cpu  time: 612802429           
+Bubble sort Integer wall time: 613       
+
+Selection sort String cpu   time: 595137413           
+Selection sort String wall  time: 595       
+Selection sort Integer cpu  time: 482644505           
+Selection sort Integer wall time: 483       
+
+Java sort String cpu   time: 15820061            
+Java sort String wall  time: 16        
+Java sort Integer cpu  time: 4125518             
+Java sort Integer wall time: 4         
+

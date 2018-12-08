@@ -1,0 +1,45 @@
+P5Sort - Austin Gailey 
+How many leaf nodes are in the binary tree? It depends on the data
+How many leaf nodes are in the AVL tree?    2^h
+Time to create BST in seconds:                    0.180552
+Time to create sorted BST in seconds:             0.175653
+Time to create AVL in seconds:                    0.005926
+Time to create sorted AVL in seconds:             0.004317
+BST Search Results
+Number     Found  Depth
+    468929 false 
+    399989 false 
+     42506 false 
+    211123 false 
+    488310 false 
+    176763 false 
+    101407 false 
+    364994 false 
+     94298 false 
+     45979 false 
+    157875 false 
+    173723 false 
+    355440 false 
+    238269 false 
+    224032 false 
+   9953295 true     5023
+Time to search BST in seconds:                    0.090458
+AVL Search Results
+Number     Found  Depth
+    468929 false 
+    399989 false 
+     42506 false 
+    211123 false 
+    488310 false 
+    176763 false 
+    101407 false 
+    364994 false 
+     94298 false 
+     45979 false 
+    157875 false 
+    173723 false 
+    355440 false 
+    238269 false 
+    224032 false 
+   9953295 true        8
+Time to search sorted AVL in seconds:             0.064182
